@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+/*1段目*/
+body {
+	margin: 0;
+	width: 100%;
+}
+
+body>.box_main>.box_1 {
+	background: linear-gradient(#BBFFFF, white);
+}
+
+.box_main {
+	overflow: auto;
+	scroll-snap-type: y;
+	height: 100vh;
+	min-width: 100%;
+}
+
+.box_1 {
+	padding: 5px 0 10% 0;
+	min-height: 100vh;
+	padding: 0;
+	scroll-snap-align: start;
+}
+
+body>.box_main>.box_2 {
+	background: linear-gradient(#E9FFA5, white);
+}
+
+.box_2 {
+	padding: 5px 0 10% 0;
+	min-height: 100vh;
+	padding: 0;
+	scroll-snap-align: start;
+}
+
+body>.box_main>.box_3 {
+	background: linear-gradient(#AEFFBD, white);
+}
+
+.box_3 {
+	padding: 5px 0 10% 0;
+	min-height: 100vh;
+	padding: 0;
+	scroll-snap-align: start;
+}
+
+body>.box_main>.box_4 {
+	background: linear-gradient(#FFAD90, white);
+}
+
+.box_4 {
+	min-height: 100vh;
+	padding: 0;
+	scroll-snap-align: start;
+}
+
+ul {
+	list-style: none;
+	margin: 20px 20px 20px;
+}
+
+header {
+	position: fixed;
+	width: 100%;
+	background-color: #333333;
+	color: white;
+}
+
+.header_1 li {
+	float: left;
+	font-size: 110%;
+	padding: 0 10px 10px 10px;
+}
+
+.h1_1 {
+	width: 100%;
+}
+
+.header_2 li {
+	float: right;
+	padding: 0px 10px 10px 10px;
+}
+
+h1 {
+	text-align: left;
+	width: 100%;
+}
+
+.h1_1 {
+	min-height: 100vh;
+	padding: 0;
+	scroll-snap-align: start;
+	margin-top: 0px;
+}
+
+.h1_1 h1 {
+	padding: 400px 0 0 0;
+	margin-top: 0;
+	font-size: 350%;
+	color: #444444;
+	text-align: center;
+}
+
+.h1_1 p {
+	text-align: center;
+	margin: 0 0 0 0;
+	font-size: 20px;
+}
+
+/*2段目*/
+.h1_2 h1 {
+	width: 100%;
+	padding: 5% 0 0 5%;
+	font-size: 400%;
+}
+
+.h1_3 h1 {
+	padding: 5% 0 0 5%;
+	font-size: 400%;
+}
+
+.h1_4 h1 {
+	padding: 5% 0 0 5%;
+	font-size: 400%;
+}
+
+table {
+	margin: auto;
+	width: 80%;
+	margin-top: 5%;
+	border-collapse: collapse;
+	margin-bottom: 25%;
+	align: center;
+	border: solid 1px #5c5c5c;
+	table-layout: auto;
+}
+
+th {
+	text-align: left;
+	width: 125px;
+	padding: 30px;
+	border: solid 1px #5c5c5c;
+}
+
+td {
+	border: solid 1px #5c5c5c;
+	padding: 20px;
+}
+
+.inquiry {
+	text-align: center;
+	width: 100%;
+}
+
+.inquiry li {
+	padding: 5px;
+}
+
+.inquiry input {
+	width: 65%;
+	height: 30px;
+}
+
+.inquiry textarea {
+	width: 65%;
+	height: 400px;
+}
+
+.submit input {
+	margin-bottom: 25px;
+	width: 100px;
+}
+
+a, a:visited, a:hover, a:active {
+	color: inherit;
+	text-decoration: none;
+}
