@@ -1,14 +1,22 @@
 package jp.co.tk.service;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jp.co.tk.entity.UserEntity;
+import jp.co.tk.repository.UserRepository;
 
 @Service
 public class LoginService {
+	@Autowired
+	UserRepository repository;
 
 	public Map<String, String> Auth(String name, String password) {
+		//入力チェックの結果を入れるMapを作成
 		Map<String, String> authMap = new HashMap<>();
 		authMap.put("Judg", "normal");
 		authMap.put("msg", "");
@@ -50,5 +58,31 @@ public class LoginService {
 			return authMap;
 		}
 		return authMap;
+
+	}
+	//存在チェック
+	public boolean login(String name, String password) {
+		//入力された値が1件の場合チェックOK
+		if(1 == repository.findbyUserAndPassword(name, password).size()) {
+			return true;
+		}
+		return false;
+	}
+
+	//ログイン登録でDBに件数が一件でもある場合NG
+	public boolean existenceCheck(String name) {
+		//件数が一件でもある場合、チェックNG
+		if(1 > repository.findbyUser(name).size()) {
+			return true;
+		}
+		return false;
+	}
+
+	//認証チェックがOKの場合、登録処理を行う
+	public UserEntity insert(HttpServletRequest request) {
+		UserEntity entity = new UserEntity();
+		entity.setName(request.getParameter("name"));
+		entity.setPassword(request.getParameter("password"));
+		return	repository.save(entity);
 	}
 }
