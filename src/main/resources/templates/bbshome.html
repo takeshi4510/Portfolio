@@ -1,15 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link th:href="@{/css/bbshome.css}" rel="stylesheet">
 </head>
 <body>
 	<h1>BBS</h1>
-	<ul>
-		<li><input type="text" name="title" placeholder="タイトル"></li>
-		<li><input type="text" name="name" placeholder="ネーム"></li>
-		<li><textarea name="contents" placeholder="Message"></textarea></li>
-	</ul>
+	<form action="bbshome" method="post">
+		<ul>
+			<li><input type="text" name="title" placeholder="タイトル"></li>
+			<li><input type="text" name="name" placeholder="ネーム"></li>
+			<li><textarea name="contents" placeholder="Message"></textarea></li>
+		</ul>
+		<input type="submit" value="投稿">
+	</form>
+
+	<div th:each="list : ${list}" class="block_1">
+		<p>
+			タイトル:<span th:text="${list.title}" ></span>
+		</p>
+		<p>
+			名前:<span th:text="${list.name}" ></span>
+		</p>
+		<p style="margin-bottom: 5%;">
+			内容:<span th:text="${list.contents}" ></span>
+		</p>
+
+	</div>
+
 </body>
 </html>
+
