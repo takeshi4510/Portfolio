@@ -1,13 +1,97 @@
 @charset "UTF-8";
 
-.table_1 td {
+h1 {
+	text-align: left;
+	margin-left: 60px;
+	margin-bottom: 0px;
 }
 
 ul {
+	list-style: none;
+}
+
+.block1 {
+	text-align: center;
+	width: 345px;
+	margin: auto;
+}
+
+.block1 textarea {
+	resize: none;
+	width: 340px;
+	height: 85px;
+}
+
+.p1 {
+	display: inline-block;
+	margin-right: 300px;
+}
+
+.p3 {
 
 }
 
-.block_1 p {
-	margin: 5px;
-	padding: 0;
+.p1 p {
+	text-align: left;
+}
+
+.p1 input {
+	width: 340px;
+}
+
+.p2 p {
+	text-align: left;
+}
+
+.p3 p {
+	text-align: left;
+}
+
+input {
+	border: none;
+	outline: none;
+	border-bottom: 1px solid;
+}
+
+textarea {
+	border: none;
+	outline: none;
+	border-bottom: 1px solid;
+}
+
+.form-field {
+	position: relative;
+	margin: 32px 0;
+}
+
+.title_p {
+	display: inline-block;
+}
+
+.name_p {
+	display: inline-block;
+}
+
+
+.block2 {
+	width: 500px;
+	margin: 0 0 85px 15px;
+}
+
+.block2 p {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.block2 a {
+	color: blue;
+	text-decoration: none;
+}
+
+.edit {
+	display: inline-block;
+}
+
+.remove {
+	display: inline-block;
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/css/bbshome.css}" rel="stylesheet">
+</head>
+<body>
+
+	<p style="margin-left: 60ox; margin-bottom: 0; text-align: left">
+		<a href="bbsthread" th:href="@{bbsthread(id=${bbs_id})}"
+			style="font-size: 30px;"> Threadへ </a>
+	</p>
+	<h1 style="text-align: center;">編集画面</h1>
+
+	<div class="block1">
+		<form action="threadedits" method="post">
+			<div class="p3">
+				<p style="">投稿内容</p>
+				<p style="margin-bottom: 0;">
+					<textarea name="contents" th:text="${threadContents}"></textarea>
+				</p>
+			</div>
+			<input type="hidden" name="thread_id" th:value="${thread_id}">
+			<input type="hidden" name="bbs_id" th:value="${bbs_id}">
+			<input type="submit" value="送信">
+		</form>
+	</div>
+
+</body>
+</html>

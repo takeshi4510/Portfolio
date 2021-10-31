@@ -15,17 +15,25 @@ public class MainHomeController {
 	@Autowired
 	MailService MailService;
 
-	//ポートフォリオ画面
+	/**
+	 * ポートフォリオ画面
+	 * @return
+	 */
 	@GetMapping("/home")
 	public String index() {
 		return "mainhome";
 	}
 
-	//お問い合わせフォーム
+	/**
+	 * お問い合わせフォーム
+	 * @param request　
+	 * @param response
+	 * @return
+	 */
 	@PostMapping("/inquiry")
 	public String mail(HttpServletRequest request, HttpServletResponse response) {
 		MailService.sendMail(request);
 
-		return "mainhome";
+		return "redirect:/home#4";
 	}
 }

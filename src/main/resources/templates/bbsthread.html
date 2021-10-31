@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/css/bbsthread.css}" rel="stylesheet">
+</head>
+<body>
+
+	<p style="margin-left: 60ox; margin-bottom: 0; text-align: left">
+		<a href="bbshome" style="font-size: 30px;"> Thread一覧へ </a>
+	</p>
+	<div class="block_put">
+		<form action="bbsthread" method="post">
+			<p style="text-align: left;">投稿内容</p>
+			<p style="margin-bottom: 0;">
+				<textarea name="contents" th:text="${bbsMsg}"></textarea>
+			</p>
+
+			<p th:text="${msg}" style="color: red;"></p>
+
+			<input type="submit" value="投稿"
+				style="width: 40px; height: 30px; margin-bottom: 35px; margin: 0 0 0 295px;">
+		</form>
+
+	</div>
+	<hr style="margin: 20px;">
+
+
+	<div th:each="list : ${list}" class="block_thread">
+		<p>
+			タイトル：<span th:text="${list.title}"></span> <span
+				th:text="${list.add_date}"></span>
+		</p>
+		<div class="name_p">
+			<p>
+				名前： <span th:text="${list.name}"></span>
+			</p>
+		</div>
+		<div class="contents_p">
+			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
+			<p th:text="${list.contents}" style="margin-bottom: 5px;"></p>
+		</div>
+	</div>
+
+	<div th:each="threadList : ${threadList}" class="Thread_p">
+
+		<div class="name_p">
+			名前：<span th:text="${threadList.name}"></span> <span
+				th:text="${threadList.add_date}"></span>
+		</div>
+
+		<div class="contents_p">
+			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
+			<p th:text="${threadList.contents}" style="margin-bottom: 5px;"></p>
+		</div>
+
+		<th:block th:if="${user_id == threadList.user_id}">
+			<div class="edit">
+				<form action="threadedit" method="post">
+					<input type="hidden" name="thread_id" th:value="${threadList.id}">
+					<input type="hidden" name="bbs_id" th:value="${bbs_id}">
+					<input type="hidden" name="name" th:value="${threadList.name}">
+					<input type="hidden" name="contents"
+						th:value="${threadList.contents}"> <input type="submit"
+						value="編集">
+				</form>
+			</div>
+
+			<div class="remove">
+				<form action="remove" method=get>
+					<input type="hidden" name="thread_id" th:value="${threadList.id}">
+					<input type="submit" value="削除">
+				</form>
+			</div>
+
+		</th:block>
+	</div>
+</body>
+</html>

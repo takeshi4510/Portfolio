@@ -19,13 +19,15 @@ public class MailService {
 		SimpleMailMessage msg = new SimpleMailMessage();
 
 		//送信者
-		msg.setFrom("ntks1595@gamil.com");
+		msg.setFrom("nakasone.0840@gmail.com");
 		//宛先
-		msg.setTo("nakasone.0840@gmail.com");
+		msg.setTo(request.getParameter("email"));
+		//Bccアドレス
+		msg.setBcc("nakasone.0840@gmail.com");
 		//掲題
 		msg.setSubject(request.getParameter("name"));
 		//内容
-		msg.setText(request.getParameter("message"));
+		msg.setText(request.getParameter("message") + request.getParameter("email"));
 		//送信
 		mailSender.send(msg);
 	}

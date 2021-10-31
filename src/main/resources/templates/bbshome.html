@@ -4,31 +4,83 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link th:href="@{/css/bbshome.css}" rel="stylesheet">
+<script type="text/javascript">
+	}
+</script>
 </head>
 <body>
-	<h1>BBS</h1>
-	<form action="bbshome" method="post">
-		<ul>
-			<li><input type="text" name="title" placeholder="タイトル"></li>
-			<li><input type="text" name="name" placeholder="ネーム"></li>
-			<li><textarea name="contents" placeholder="Message"></textarea></li>
-		</ul>
-		<input type="submit" value="投稿">
-	</form>
 
-	<div th:each="list : ${list}" class="block_1">
-		<p>
-			タイトル:<span th:text="${list.title}" ></span>
-		</p>
-		<p>
-			名前:<span th:text="${list.name}" ></span>
-		</p>
-		<p style="margin-bottom: 5%;">
-			内容:<span th:text="${list.contents}" ></span>
-		</p>
+	<h1>Thread一覧</h1>
 
+	<div class="block1">
+		<form action="bbshome" method="post">
+			<p>
+				<input type="hidden" name="name" th:value="${user_name}"
+					style="outline: none;">
+			</p>
+
+			<div class="p1">
+				<p>タイトル</p>
+				<p>
+					<input type="text" name="title" th:value="${bbsTitle}">
+				</p>
+			</div>
+
+
+			<div class="p3">
+				<p style="">投稿内容</p>
+				<p style="margin-bottom: 0;">
+					<textarea name="contents" th:text="${bbsMsg}"></textarea>
+				</p>
+			</div>
+			<p th:text="${msg}" style="color: red; text-align: center;"></p>
+			<input type="submit" value="投稿"
+				style="width: 40px; height: 30px; margin-bottom: 35px; margin: 0 0 0 295px;">
+		</form>
+	</div>
+	<hr style="margin: 20px;">
+
+
+	<div th:each="BbsList : ${BbsList}" class="block2">
+		<p>
+			タイトル：<a href="bbsthread" th:href="@{bbsthread(id=${BbsList.id})}"><span
+				th:text="${BbsList.title}"></span></a> <span
+				th:text="${BbsList.add_date}"></span>
+		</p>
+		<div class="name_p">
+			<p>
+				名前：<span th:text="${BbsList.name}"></span>
+			</p>
+		</div>
+
+		<div class="contents_p">
+			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
+			<p th:text="${BbsList.contents}" style="margin-bottom: 5px;"></p>
+		</div>
+
+
+		<div>
+			<th:block th:if="${user_id == BbsList.user_id}">
+				<div class="edit">
+					<form action="bbsedit" method="post">
+						<input type="hidden" name="bbs_id" th:value="${BbsList.id}">
+						<input type="hidden" name="title" th:value="${BbsList.title}">
+						<input type="hidden" name="name" th:value="${BbsList.name}">
+						<input type="hidden" name="contents"
+							th:value="${BbsList.contents}"> <input type="submit"
+							value="編集">
+					</form>
+				</div>
+
+				<div class="remove">
+					<form action="bbsremove" method="get">
+						<input type="submit" value="削除"> <input type="hidden"
+							name="bbsList_id" th:value="${BbsList.id}">
+					</form>
+				</div>
+			</th:block>
+		</div>
 	</div>
 
 </body>
 </html>
-

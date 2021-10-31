@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+.block_thread {
+	width: 600px;
+	margin: 5px 0 50px 15px;
+}
+
+.block_thread p {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.block_total p {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.block_put {
+	width: 340px;
+	margin: auto;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.block_put textarea {
+	resize: none;
+	border: none;
+	outline: none;
+	border-bottom: 1px solid;
+	width: 340px;
+	height: 85px;
+	outline: none;
+	border-bottom: 1px solid;
+}
+
+textarea {
+
+}
+
+ul {
+	list-style: none;
+}
+
+.title_p {
+	display: inline-block;
+}
+
+.name_p {
+	display: inline-block;
+}
+
+.edit {
+	display: inline-block;
+}
+
+.remove {
+	display: inline-block;
+}
+
+input {
+	border: none;
+	outline: none;
+	border-bottom: 1px solid;
+}
+
+.Thread_p p {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.Thread_p {
+	margin: 5px 0 50px 15px;
+	width: 600px;
+}
+
+a {
+	color: blue;
+	text-decoration: none;
+	text-align: left;
+	margin-left: 60px;
+	margin-bottom: 0px;
+}

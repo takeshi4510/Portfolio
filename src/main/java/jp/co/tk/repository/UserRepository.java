@@ -21,4 +21,16 @@ public interface UserRepository extends JpaRepository<UserEntity, Long>{
 			, nativeQuery= true)
 	public List<UserEntity> findbyUser(String name);
 
+	//idを取得
+	@Query(value="select id from user where name = ?1 and pass = ?2"
+			, nativeQuery=true)
+	public int selectId(String name, String password);
+
+
+	//ログインしたidをもとにユーザネームを取得
+	@Query(value="select name from user where id = ?1"
+			,nativeQuery=true)
+	public String user_name(Object user_id);
+
+
 }

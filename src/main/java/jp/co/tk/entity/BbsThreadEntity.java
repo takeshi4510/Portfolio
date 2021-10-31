@@ -1,5 +1,5 @@
 package jp.co.tk.entity;
-import java.io.Serializable;
+
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -9,10 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="user")
-public class UserEntity implements Serializable {
+@Table(name="bbsthread")
+public class BbsThreadEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +19,18 @@ public class UserEntity implements Serializable {
 	@Column
 	private int id;
 	@Column
+	private int bbs_id;
+	@Column
+	private int user_id;
+	@Column
 	private String name;
 	@Column
-	private String pass;
+	private String contents;
 	@Column
 	private Timestamp add_date;
 	@Column
 	private Timestamp up_date;
+
 
 
 	public int getId() {
@@ -35,17 +39,29 @@ public class UserEntity implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public int getBbs_id() {
+		return bbs_id;
+	}
+	public void setBbs_id(int bbs_id) {
+		this.bbs_id = bbs_id;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPassword() {
-		return pass;
+	public String getContents() {
+		return contents;
 	}
-	public void setPassword(String password) {
-		this.pass = password;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 	public Timestamp getAdd_date() {
 		return add_date;
@@ -59,4 +75,5 @@ public class UserEntity implements Serializable {
 	public void setUp_date(Timestamp up_date) {
 		this.up_date = up_date;
 	}
+
 }
