@@ -32,8 +32,6 @@ public interface BbsHomeRepository extends JpaRepository<BbsHomeEntity, Long>{
 			, nativeQuery = true)
 	public int IdSelect(String name);
 
-
-
 	@Transactional
 	@Modifying
 	@Query(value = "delete from bbs where id = ?1"

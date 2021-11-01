@@ -26,9 +26,11 @@ public class BbsThreadController {
 
 	//ログインしたユーザID 格納用
 	private int user_id;
-	//
 	private int bbs_id;
 
+	/*
+	 * スレッド画面
+	 */
 	@GetMapping("bbsthread")
 	public String index(HttpServletRequest request, @RequestParam("id")Integer bbs_id,Model model
 			,@ModelAttribute("msg") String msg) {
@@ -43,6 +45,9 @@ public class BbsThreadController {
 		return "bbsthread";
 	}
 
+	/*
+	 * スレッド画面の登録処理
+	 */
 	@PostMapping("bbsthread")
 	public String thread(HttpServletRequest request, Model model,RedirectAttributes redirectAttributes) {
 
@@ -60,6 +65,10 @@ public class BbsThreadController {
 		return "redirect:/bbsthread" + "?id=" + bbs_id;
 
 	}
+
+	/*
+	 * 削除処理
+	 */
 	@GetMapping("remove")
 	public String remove(HttpServletRequest request) {
 		System.out.println(request.getParameter("thread_id"));

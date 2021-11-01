@@ -20,13 +20,11 @@ public interface BbsThreadRepository extends JpaRepository<BbsThreadEntity, Long
 			, nativeQuery = true)
 	List<BbsThreadEntity> threadFingId(int id);
 
-
 	@Transactional
 	@Modifying
 	@Query(value = "delete from bbsthread where id = ?1"
 			, nativeQuery = true)
 	public int delete(String thread_id);
-
 
 	//bbs編集IDを取得
 	@Query(value = "select * from bbsthread where id = ?1"

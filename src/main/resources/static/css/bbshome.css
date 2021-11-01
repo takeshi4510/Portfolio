@@ -95,3 +95,8 @@ textarea {
 .remove {
 	display: inline-block;
 }
+
+a{
+	color: blue;
+	text-decoration: none;
+}

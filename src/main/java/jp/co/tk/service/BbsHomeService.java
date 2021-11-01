@@ -49,7 +49,9 @@ public class BbsHomeService {
 
 	}
 
-	//BbsHomeの登録処理
+	/*
+	 * BbsHomeの登録処理
+	 */
 	public BbsHomeEntity insert(HttpServletRequest request, int id) {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		BbsHomeEntity entity = new BbsHomeEntity();
@@ -61,12 +63,10 @@ public class BbsHomeService {
 		return BbsHomeRepository.save(entity);
 	}
 
-	//
 	public List<BbsHomeEntity> select() {
 		return BbsHomeRepository.findBySelectAll();
 	}
 
-	//
 	public int remove(String user_id) {
 		return BbsHomeRepository.remove(user_id);
 	}

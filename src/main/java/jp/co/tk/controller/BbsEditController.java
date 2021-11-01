@@ -38,6 +38,11 @@ public class BbsEditController {
 		return "bbsedit";
 	}
 
+	/**
+	 * bbs編集処理
+	 * @param request
+	 * @return
+	 */
 	@PostMapping("edit")
 	public String bbsedit(HttpServletRequest request) {
 
@@ -61,7 +66,7 @@ public class BbsEditController {
 	}
 
 	/*
-	 * 編集処理
+	 * スレッド編集処理
 	 */
 	@PostMapping("threadedits")
 	public String threadedit(HttpServletRequest request) {

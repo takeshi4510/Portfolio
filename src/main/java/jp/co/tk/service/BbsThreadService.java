@@ -49,14 +49,10 @@ public class BbsThreadService {
 			return authMap;
 		}
 
-
 		return authMap;
 	}
 
 
-	/*
-	 *
-	 */
 	public List<BbsHomeEntity> select(Integer id) {
 		return BbsHomeRepository.findbyId(id);
 	}
@@ -73,12 +69,10 @@ public class BbsThreadService {
 		return BbsThreadRepository.save(entity);
 	}
 
-	//
 	public List<BbsThreadEntity> threadSelect(int id) {
 		return BbsThreadRepository.threadFingId(id);
 	}
 
-	//
 	public int remove(String thread_id) {
 		return BbsThreadRepository.delete(thread_id);
 	}

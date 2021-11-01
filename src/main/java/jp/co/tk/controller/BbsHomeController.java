@@ -60,8 +60,6 @@ public class BbsHomeController {
 
 		String user_name = LoginService.id(user_id);
 
-		//
-		System.out.println(user_name);
 		//全件検索
 		List<BbsHomeEntity> bbsList = BbsHomeService.select();
 		//ソート条件降順
@@ -106,7 +104,7 @@ public class BbsHomeController {
 	}
 
 	/**
-	 * delete
+	 * 削除処理
 	 * @param request
 	 * @return
 	 */
@@ -119,11 +117,4 @@ public class BbsHomeController {
 		return "redirect:/bbshome";
 	}
 
-	@PostMapping("bbsupdate")
-	public String update(HttpServletRequest request) {
-
-		//		BbsHomeService.update(request.getParameter("useer_id"));
-
-		return "redirect:/bbshome";
-	}
 }

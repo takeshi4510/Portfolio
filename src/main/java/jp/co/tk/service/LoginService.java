@@ -29,7 +29,6 @@ public class LoginService {
 		if("".equals(request.getParameter("name")) || request.getParameter("name").isEmpty()) {
 			authMap.put("msg", "Nameが未入力です！");
 			authMap.put("Judg", "1");
-			System.out.println("NG");
 			return authMap;
 		}
 
@@ -50,7 +49,9 @@ public class LoginService {
 		return authMap;
 	}
 
-	//セッションに使用する値をユーザテーブルから取得
+	/*
+	 * セッションに使用する値をユーザテーブルから取得
+	 */
 	public int selectId(String name, String password) {
 		return UserRepository.selectId(name, password);
 	}
