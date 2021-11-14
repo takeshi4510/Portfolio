@@ -49,7 +49,7 @@ public class BbsHomeController {
 		if(request.getSession().getAttribute("sessionId") == null || "".equals(request.getSession().getAttribute("sessionId"))) {
 
 			//セッションがnullまたは空の場合、ログイン画面に遷移
-			return "redirect:/login";
+			return "redirect:/bbs/login";
 		}
 
 

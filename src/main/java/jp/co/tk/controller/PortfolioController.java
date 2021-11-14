@@ -16,7 +16,7 @@ import jp.co.tk.service.MailService;
  *
  */
 @Controller
-public class MainHomeController {
+public class PortfolioController {
 	@Autowired
 	MailService MailService;
 
@@ -28,7 +28,7 @@ public class MainHomeController {
 	public String doGetHome() {
 
 		//ポートフォリオ画面に遷移
-		return "mainhome";
+		return "portfolio";
 	}
 
 	/**

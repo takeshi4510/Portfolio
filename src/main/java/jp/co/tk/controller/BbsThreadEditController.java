@@ -31,6 +31,13 @@ public class BbsThreadEditController {
 			HttpServletRequest request,
 			Model model) {
 
+		//セッションスコープ
+		if(request.getSession().getAttribute("sessionId") == null || "".equals(request.getSession().getAttribute("sessionId"))) {
+
+			//セッションがnullまたは空の場合、ログイン画面に遷移
+			return "redirect:/bbs/login";
+		}
+
 		//リクエストで送られたデータをhtmlに渡す
 		model.addAttribute("threadId", request.getParameter("threadId"));
 		model.addAttribute("threadName",request.getParameter("name"));
@@ -40,7 +47,6 @@ public class BbsThreadEditController {
 		//スレッド編集画面に遷移
 		return "/threadedit";
 	}
-
 
 	/**
 	 *スレッド編集更新処理

@@ -2,22 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Portfolio</title>
+<title>Login</title>
 <link th:href="@{/css/login.css}" rel="stylesheet">
-<script th:src="@{/js/.js}"></script>
 </head>
-<body>
+<body style="text-align: center;">
 	<h1>Login画面</h1>
-	<form action="/bbs/login/validate" method="post">
-		<div class="login">
-			<ul>
-				<li><input type="text" name="name" placeholder="Name" th:value="${name}"></li>
-				<li><input type="password" name="password" placeholder="Password"></li>
-				<li><input type="submit" value="button"></li>
-			</ul>
+	<div class="block">
+		<form action="/bbs/login/validate" method="post">
+			<div class="login">
+					<p><input type="text" name="name" placeholder="Name"
+						th:value="${name}"></p>
+					<p><input type="password" name="password"
+						placeholder="Password"></p>
+					<p><input type="submit" value="ログイン"
+						style="margin: 5px 0 0 100px;" ></p>
+			</div>
+		</form>
+		<div>
+			<p th:text="${msg}" style="color: red"></p>
+			<a href="/portfolio">ポートフォリオ画面へ</a><span>・</span><a
+				href="/bbs/login/registration">ログイン登録画面へ</a>
 		</div>
-	</form>
-	<p th:text="${msg}"></p>
-	<a href="/bbs/login/registration">ログイン登録画面へ</a>
+	</div>
 </body>
 </html>

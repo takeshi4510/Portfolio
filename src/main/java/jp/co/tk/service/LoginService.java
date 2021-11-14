@@ -30,13 +30,13 @@ public class LoginService {
 
 		//Nameの空文字チェックとnullチェック
 		if("".equals(request.getParameter("name")) || request.getParameter("name").isEmpty()) {
-			msg = "Nameが未入力です！";
+			msg = "Nameが未入力です";
 			return msg;
 		}
 
 		//Passwordの空文字チェックとnullチェック
 		if("".equals(request.getParameter("password")) || request.getParameter("password").isEmpty()) {
-			msg = "Passwordが未入力です！";
+			msg = "Passwordが未入力です";
 			return msg;
 		}
 

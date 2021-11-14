@@ -29,6 +29,13 @@ public class BbsEditController {
 	@PostMapping("/bbs/edit")
 	public String doPostBbsEdit(HttpServletRequest request, Model model){
 
+		//セッションスコープ
+		if(request.getSession().getAttribute("sessionId") == null || "".equals(request.getSession().getAttribute("sessionId"))) {
+
+			//セッションがnullまたは空の場合、ログイン画面に遷移
+			return "redirect:/bbs/login";
+		}
+
 		model.addAttribute("bbsId", request.getParameter("bbsId"));
 		model.addAttribute("bbsTitle",request.getParameter("title"));
 		model.addAttribute("bbsName",request.getParameter("name"));

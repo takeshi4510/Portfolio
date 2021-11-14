@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>BbsThread</title>
 <link th:href="@{/css/bbsthread.css}" rel="stylesheet">
 </head>
 <body>
@@ -40,7 +40,9 @@
 		</div>
 		<div class="contents_p">
 			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
-			<p th:text="${list.contents}" style="margin-bottom: 5px;"></p>
+			<th:block
+				th:each="str, stat : ${list.contents.split('\r\n|\r|\n', -1)}">
+			<p th:text="${str}" style="margin-bottom: 5px;"></p>
 		</div>
 	</div>
 
@@ -53,7 +55,9 @@
 
 		<div class="contents_p">
 			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
-			<p th:text="${threadList.contents}" style="margin-bottom: 5px;"></p>
+			<th:block
+				th:each="str, stat : ${threadList.contents.split('\r\n|\r|\n', -1)}">
+				<p th:text="${str}" style="margin-bottom: 5px;"></p>
 		</div>
 
 		<th:block th:if="${userId == threadList.user_id}">
@@ -70,8 +74,8 @@
 			<div class="remove">
 				<form action="/bbs/thread/remove" method=get>
 					<input type="hidden" name="threadId" th:value="${threadList.id}">
-					<input type="hidden" name=bbsId th:value="${bbsId}">
-					<input type="submit" value="削除">
+					<input type="hidden" name=bbsId th:value="${bbsId}"> <input
+						type="submit" value="削除">
 				</form>
 			</div>
 

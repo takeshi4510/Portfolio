@@ -11,23 +11,23 @@ import jp.co.tk.entity.UserEntity;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long>{
 
-	//ログイン時の存在チェック
-	@Query(value="select * from user where name = ?1 and pass = ?2"
+	//NAMEとPASSをもとにUSERTABLEからデータを取得
+	@Query(value="select * from USER where NAME = ?1 and PASS = ?2"
 			, nativeQuery=true)
 	public List<UserEntity> findbyUserAndPassword(String name, String password);
 
-	//ログイン登録時のユーザチェック
-	@Query(value="select * from user where name = ?1"
+	//NAMEをもとにUSERTABLEからデータを取得
+	@Query(value="select * from USER where NAME = ?1"
 			, nativeQuery= true)
 	public List<UserEntity> findbyUser(String name);
 
-	//idを取得
-	@Query(value="select id from user where name = ?1 and pass = ?2"
+	//NAMEとPASSをもとにUSERTABLEからデータを取得
+	@Query(value="select ID from USER where NAME = ?1 and PASS = ?2"
 			, nativeQuery=true)
 	public int findById(String name, String password);
 
-	//ログインしたidをもとにユーザネームを取得
-	@Query(value="select name from user where id = ?1"
+	//IDをもとにUSERTABLEからデータを取得
+	@Query(value="select NAME from USER where ID = ?1"
 			,nativeQuery=true)
 	public String findUserNameById(Object userId);
 

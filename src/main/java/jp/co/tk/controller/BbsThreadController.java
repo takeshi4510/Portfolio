@@ -43,6 +43,13 @@ public class BbsThreadController {
 			@RequestParam("id")Integer bbsId,
 			@ModelAttribute("msg") String msg) {
 
+		//セッションスコープ
+		if(request.getSession().getAttribute("sessionId") == null || "".equals(request.getSession().getAttribute("sessionId"))) {
+
+			//セッションがnullまたは空の場合、ログイン画面に遷移
+			return "redirect:/bbs/login";
+		}
+
 		//変数userIdにセッションIDを格納
 		int userId = (int) request.getSession().getAttribute("sessionId");
 

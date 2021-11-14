@@ -2,14 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Bbs</title>
 <link th:href="@{/css/bbshome.css}" rel="stylesheet">
 <script type="text/javascript">
+
 </script>
 </head>
 <body>
-
-	<h1>Thread一覧</h1>
 
 	<div class="block1">
 		<form action="/bbs/create" method="post">
@@ -29,7 +28,7 @@
 			<div class="p3">
 				<p style="">投稿内容</p>
 				<p style="margin-bottom: 0;">
-					<textarea name="contents" th:text="${bbsMsg}"></textarea>
+					<textarea name="contents" th:text="${bbsMsg}" wrap="hard"></textarea>
 				</p>
 			</div>
 			<p th:text="${msg}" style="color: red; text-align: center;"></p>
@@ -54,7 +53,9 @@
 
 		<div class="contents_p">
 			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
-			<p th:text="${bbsList.contents}" style="margin-bottom: 5px;"></p>
+			<th:block
+				th:each="str, stat : ${bbsList.contents.split('\r\n|\r|\n', -1)}">
+				<p th:text="${str}" style="margin-bottom: 5px;"></p>
 		</div>
 
 
@@ -71,7 +72,7 @@
 					</form>
 				</div>
 
-				<div class="/bbsremove">
+				<div class="remove">
 					<form action="/bbs/remove" method="get">
 						<input type="submit" value="削除"> <input type="hidden"
 							name="bbsListId" th:value="${bbsList.id}">

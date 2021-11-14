@@ -85,7 +85,7 @@ public class BbsHomeService {
 	 * @return
 	 */
 	public int removeBbs(String userId) {
-		return service.remove(userId);
+		return service.removeBbs(userId);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class BbsHomeService {
 
 		LocalDateTime nowDateTime = LocalDateTime.now();
 
-		Optional<BbsHomeEntity> optinal = service.edit(request.getParameter("bbsId"));
+		Optional<BbsHomeEntity> optinal = service.updateBbs(request.getParameter("bbsId"));
 		BbsHomeEntity entity = optinal.get();
 
 		entity.setTitle(request.getParameter("title"));

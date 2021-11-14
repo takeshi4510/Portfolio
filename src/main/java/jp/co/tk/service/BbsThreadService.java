@@ -126,7 +126,7 @@ public class BbsThreadService {
 	public BbsThreadEntity updateThreadEdit(
 			HttpServletRequest request) {
 
-		Optional<BbsThreadEntity> optinal = repository.edit(request.getParameter("threadId"));
+		Optional<BbsThreadEntity> optinal = repository.editBbsThread(request.getParameter("threadId"));
 
 		BbsThreadEntity entity = optinal.get();
 

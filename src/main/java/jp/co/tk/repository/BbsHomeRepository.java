@@ -17,31 +17,26 @@ import jp.co.tk.entity.BbsHomeEntity;
 public interface BbsHomeRepository extends JpaRepository<BbsHomeEntity, Long>{
 
 
-
+	//BBSTABLEのデータを全件取得
 	@Query(value = "select * from BBS order by ID desc"
 			, nativeQuery = true)
 	public List<BbsHomeEntity> findAllDesc();
 
-
+	//IDをもとにBBSTABLEのデータを取得
 	@Query(value = "select * from BBS where ID = ?1"
 			, nativeQuery = true)
 	public List<BbsHomeEntity> findByBbsId(Integer id);
 
-
-	@Query(value = "select * from USER where NAME = ?1"
-			, nativeQuery = true)
-	public int IdSelect(String name);
-
+	//BBSTABLEのデータをIDをもとにデータを削除
 	@Transactional
 	@Modifying
 	@Query(value = "delete from BBS where ID = ?1"
 	, nativeQuery = true)
-	public int remove(String user_id);
+	public int removeBbs(String user_id);
 
-
-	//bbs編集IDを取得
+	//IDをもとにBBSTABLEからデータを取得
 	@Query(value = "select * from BBS where ID = ?1"
 			, nativeQuery = true)
-	public Optional<BbsHomeEntity> edit(String bbs_id);
+	public Optional<BbsHomeEntity> updateBbs(String bbs_id);
 
 }
