@@ -5,7 +5,6 @@
 <title>Insert title here</title>
 <link th:href="@{/css/bbshome.css}" rel="stylesheet">
 <script type="text/javascript">
-	}
 </script>
 </head>
 <body>
@@ -13,9 +12,9 @@
 	<h1>Thread一覧</h1>
 
 	<div class="block1">
-		<form action="bbshome" method="post">
+		<form action="/bbs/create" method="post">
 			<p>
-				<input type="hidden" name="name" th:value="${user_name}"
+				<input type="hidden" name="name" th:value="${userName}"
 					style="outline: none;">
 			</p>
 
@@ -41,41 +40,41 @@
 	<hr style="margin: 20px;">
 
 
-	<div th:each="BbsList : ${BbsList}" class="block2">
+	<div th:each="bbsList : ${bbsList}" class="block2">
 		<p>
-			タイトル：<a href="bbsthread" th:href="@{bbsthread(id=${BbsList.id})}"><span
-				th:text="${BbsList.title}"></span></a> <span
-				th:text="${BbsList.add_date}"></span>
+			タイトル：<a th:href="@{/bbs/thread(id=${bbsList.id})}"><span
+				th:text="${bbsList.title}"></span></a> <span
+				th:text="${#temporals.format(bbsList.add_date, 'yyyy/MM/dd HH:mm:ss')}"></span>
 		</p>
 		<div class="name_p">
 			<p>
-				名前：<span th:text="${BbsList.name}"></span>
+				名前：<span th:text="${bbsList.name}"></span>
 			</p>
 		</div>
 
 		<div class="contents_p">
 			<p style="margin-top: 10px; margin-bottom: 5px;">内容：</p>
-			<p th:text="${BbsList.contents}" style="margin-bottom: 5px;"></p>
+			<p th:text="${bbsList.contents}" style="margin-bottom: 5px;"></p>
 		</div>
 
 
 		<div>
-			<th:block th:if="${user_id == BbsList.user_id}">
+			<th:block th:if="${userId == bbsList.user_id}">
 				<div class="edit">
-					<form action="bbsedit" method="post">
-						<input type="hidden" name="bbs_id" th:value="${BbsList.id}">
-						<input type="hidden" name="title" th:value="${BbsList.title}">
-						<input type="hidden" name="name" th:value="${BbsList.name}">
+					<form action="/bbs/edit" method="post">
+						<input type="hidden" name="bbsId" th:value="${bbsList.id}">
+						<input type="hidden" name="title" th:value="${bbsList.title}">
+						<input type="hidden" name="name" th:value="${bbsList.name}">
 						<input type="hidden" name="contents"
-							th:value="${BbsList.contents}"> <input type="submit"
+							th:value="${bbsList.contents}"> <input type="submit"
 							value="編集">
 					</form>
 				</div>
 
-				<div class="remove">
-					<form action="bbsremove" method="get">
+				<div class="/bbsremove">
+					<form action="/bbs/remove" method="get">
 						<input type="submit" value="削除"> <input type="hidden"
-							name="bbsList_id" th:value="${BbsList.id}">
+							name="bbsListId" th:value="${bbsList.id}">
 					</form>
 				</div>
 			</th:block>

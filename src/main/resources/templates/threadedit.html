@@ -8,21 +8,21 @@
 <body>
 
 	<p style="margin-left: 60ox; margin-bottom: 0; text-align: left">
-		<a href="bbsthread" th:href="@{bbsthread(id=${bbs_id})}"
+		<a th:href="@{/bbs/thread(id=${bbsId})}"
 			style="font-size: 30px; margin-left: 50px;"> Threadへ </a>
 	</p>
 	<h1 style="text-align: center;">編集画面</h1>
 
 	<div class="block1">
-		<form action="threadedits" method="post">
+		<form action="/bbs/thread/update" method="post">
 			<div class="p3">
 				<p style="">投稿内容</p>
 				<p style="margin-bottom: 0;">
 					<textarea name="contents" th:text="${threadContents}"></textarea>
 				</p>
 			</div>
-			<input type="hidden" name="thread_id" th:value="${thread_id}">
-			<input type="hidden" name="bbs_id" th:value="${bbs_id}">
+			<input type="hidden" name="threadId" th:value="${threadId}">
+			<input type="hidden" name="bbsId" th:value="${bbsId}">
 			<input type="submit" value="送信">
 		</form>
 	</div>

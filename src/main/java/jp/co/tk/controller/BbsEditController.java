@@ -8,18 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jp.co.tk.service.BbsHomeService;
-import jp.co.tk.service.BbsThreadService;
-import jp.co.tk.service.LoginService;
 
+/**
+ *
+ * bbsの更新画面
+ *
+ */
 @Controller
 public class BbsEditController {
+	@Autowired
+	BbsHomeService service;
 
-	@Autowired
-	BbsHomeService BbsHomeService;
-	@Autowired
-	BbsThreadService BbsThreadService;
-	@Autowired
-	LoginService LoginService;
 
 	/**
 	 * bbs編集画面
@@ -27,52 +26,31 @@ public class BbsEditController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("bbsedit")
-	public String bbsedit(HttpServletRequest request, Model model){
+	@PostMapping("/bbs/edit")
+	public String doPostBbsEdit(HttpServletRequest request, Model model){
 
-		model.addAttribute("bbsId", request.getParameter("bbs_id"));
+		model.addAttribute("bbsId", request.getParameter("bbsId"));
 		model.addAttribute("bbsTitle",request.getParameter("title"));
 		model.addAttribute("bbsName",request.getParameter("name"));
 		model.addAttribute("bbsContents",request.getParameter("contents"));
 
-		return "bbsedit";
+		//bbs変更画面に遷移
+		return "/bbsedit";
 	}
 
 	/**
-	 * bbs編集処理
+	 * bbs更新処理
 	 * @param request
 	 * @return
 	 */
-	@PostMapping("edit")
-	public String bbsedit(HttpServletRequest request) {
+	@PostMapping("/bbs/update")
+	public String doPostBbsUpdate(HttpServletRequest request) {
 
-		BbsHomeService.edit(request);
-		return "redirect:/bbshome";
+		//編集処理を呼び出し
+		service.updateBbs(request);
 
-	}
-	/**
-	 * スレッド編集
-	 * @param request
-	 * @param model
-	 * @return
-	 */
-	@PostMapping("threadedit")
-	public String thrededit(HttpServletRequest request, Model model) {
-		model.addAttribute("thread_id", request.getParameter("thread_id"));
-		model.addAttribute("threadName",request.getParameter("name"));
-		model.addAttribute("threadContents",request.getParameter("contents"));
-		model.addAttribute("bbs_id", request.getParameter("bbs_id"));
-		return "threadedit";
-	}
-
-	/*
-	 * スレッド編集処理
-	 */
-	@PostMapping("threadedits")
-	public String threadedit(HttpServletRequest request) {
-
-		BbsThreadService.edit(request);
-		return "redirect:/bbsthread" + "?id=" + request.getParameter("bbs_id");
+		//bbs画面に遷移
+		return "redirect:/bbs/home";
 
 	}
 

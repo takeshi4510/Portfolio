@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Login画面</h1>
-	<form action="login" method="post">
+	<form action="/bbs/login/validate" method="post">
 		<div class="login">
 			<ul>
 				<li><input type="text" name="name" placeholder="Name" th:value="${name}"></li>
@@ -18,6 +18,6 @@
 		</div>
 	</form>
 	<p th:text="${msg}"></p>
-	<a href="loginregistration">ログイン登録画面へ</a>
+	<a href="/bbs/login/registration">ログイン登録画面へ</a>
 </body>
 </html>

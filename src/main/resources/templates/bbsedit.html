@@ -8,13 +8,13 @@
 <body>
 
 	<p style="margin-left: 60ox; margin-bottom: 0; text-align: left">
-		<a href="bbshome" style="font-size: 30px; margin-left: 50px;"> Thread一覧へ </a>
+		<a href="/bbs/home" style="font-size: 30px; margin-left: 50px;"> Thread一覧へ </a>
 	</p>
 	<h1 style="text-align: center;">編集画面</h1>
 	<div class="block1">
-		<form action="edit" method="post">
+		<form action="/bbs/update" method="post">
 			<p>
-				<input type="hidden" name="name" th:value="${user_name}"
+				<input type="hidden" name="name" th:value="${userName}"
 					style="outline: none;">
 			</p>
 
@@ -32,7 +32,7 @@
 				</p>
 			</div>
 
-			<input type="hidden" name="bbs_id" th:value="${bbsId}">
+			<input type="hidden" name="bbsId" th:value="${bbsId}">
 			<p th:text="${msg}" style="color: red; text-align: center;"></p>
 
 			<input type="submit" value="編集"

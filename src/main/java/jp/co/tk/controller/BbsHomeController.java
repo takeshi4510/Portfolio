@@ -1,9 +1,6 @@
 package jp.co.tk.controller;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,15 +17,18 @@ import jp.co.tk.entity.BbsHomeEntity;
 import jp.co.tk.service.BbsHomeService;
 import jp.co.tk.service.LoginService;
 
+/**
+ *
+ *bbs一覧画面
+ *
+ */
 @Controller
 public class BbsHomeController {
 
-	private int user_id;
-
 	@Autowired
-	BbsHomeService BbsHomeService;
+	BbsHomeService service;
 	@Autowired
-	LoginService LoginService;
+	LoginService loginService;
 
 	/**
 	 * bbsホーム画面
@@ -36,20 +36,22 @@ public class BbsHomeController {
 	 * @param msg
 	 * @return
 	 */
-	@GetMapping("bbshome")
-	public String index(HttpServletRequest request, Model model,
-			@ModelAttribute("msg") String msg,@ModelAttribute("bbsTitle") String bbsTitle, @ModelAttribute("bbsName") String bbsName,
+	@GetMapping("/bbs/home")
+	public String doGetBbsHome(
+			Model model,
+			HttpServletRequest request,
+			@ModelAttribute("msg") String msg,
+			@ModelAttribute("bbsTitle") String bbsTitle,
+			@ModelAttribute("bbsName") String bbsName,
 			@ModelAttribute("bbsMsg") String bbsMsg){
 
 		//セッションスコープ
-		if(request.getSession().getAttribute("session_id") == null || "".equals(request.getSession().getAttribute("id"))) {
+		if(request.getSession().getAttribute("sessionId") == null || "".equals(request.getSession().getAttribute("sessionId"))) {
 
 			//セッションがnullまたは空の場合、ログイン画面に遷移
 			return "redirect:/login";
 		}
 
-		//セッションIDを変数user_idに格納
-		this.user_id = (int) request.getSession().getAttribute("session_id") ;
 
 		//入力チェックがNGの場合変数msgにメッセージを格納
 		model.addAttribute("msg", msg);
@@ -57,20 +59,22 @@ public class BbsHomeController {
 		model.addAttribute("bbsName", bbsName);
 		model.addAttribute("bbsMsg", bbsMsg);
 
-
-		String user_name = LoginService.id(user_id);
+		//セッションIDを変数userIdに格納
+		int userId = (int) request.getSession().getAttribute("sessionId");
+		//変数userNameにユーザ名を格納
+		String userName = loginService.getUserName(userId);
 
 		//全件検索
-		List<BbsHomeEntity> bbsList = BbsHomeService.select();
-		//ソート条件降順
-		Collections.reverse(bbsList);
-		//bbsの一覧をbbsホーム画面に渡す
-		model.addAttribute("BbsList", bbsList);
-		//ログイン中のユーザのIDをbbsホーム画面に渡す
-		model.addAttribute("user_id", user_id);
-		//ログインユーザをbbsホームに渡す
-		model.addAttribute("user_name", user_name);
-		return "bbshome";
+		List<BbsHomeEntity> bbsList = service.findByBbsAll();
+		//全件取得したデータをhtmlに渡す
+		model.addAttribute("bbsList", bbsList);
+		//ログイン中のユーザIDをhtmlに渡す
+		model.addAttribute("userId", userId);
+		//ログイン中のユーザ名をhtmlに渡す
+		model.addAttribute("userName", userName);
+
+		//bbshome画面に遷移
+		return "/bbshome";
 	}
 
 	/**
@@ -81,26 +85,33 @@ public class BbsHomeController {
 	 * @param redirectAttributes
 	 * @return
 	 */
-	@PostMapping("bbshome")
-	public String input(HttpServletRequest request, HttpServletResponse response, Model model,
+	@PostMapping("/bbs/create")
+	public String doPostBbsInput(
+			Model model,
+			HttpServletRequest request,
+			HttpServletResponse response,
 			RedirectAttributes redirectAttributes) {
-		Map<String, String> map = new HashMap<>();
+
+		//セッションIDを変数userIdに格納
+		int userId = (int) request.getSession().getAttribute("sessionId");
 
 		//入力チェックを行う
-		map = BbsHomeService.check(request);
-		if("1" == map.get("check")) {
-			redirectAttributes.addFlashAttribute("msg", map.get("msg"));
+		String msg = service.validateBbsInput(request);
 
+		if(msg.length() > 0) {
+			redirectAttributes.addFlashAttribute("msg", msg);
 			redirectAttributes.addFlashAttribute("bbsTitle", request.getParameter("title"));
 			redirectAttributes.addFlashAttribute("bbsName", request.getParameter("name"));
 			redirectAttributes.addFlashAttribute("bbsMsg", request.getParameter("contents"));
 
-			return "redirect:/bbshome" + "?id=" + user_id;
+			return "redirect:/bbs/home";
 		}
 
-		//新規登録
-		BbsHomeService.insert(request, user_id);
-		return "redirect:/bbshome";
+		//新規登録処理を呼び出す
+		service.insertBbs(request, userId);
+
+		//bbshome画面にリダイレクト
+		return "redirect:/bbs/home";
 	}
 
 	/**
@@ -108,13 +119,14 @@ public class BbsHomeController {
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("bbsremove")
-	public String remove(HttpServletRequest request) {
+	@GetMapping("/bbs/remove")
+	public String doGetRemove(HttpServletRequest request) {
 
-		//bbshomeのデータをuser_idをもとに削除
-		BbsHomeService.remove(request.getParameter("bbsList_id"));
+		//ユーザIDをもとに削除処理処理を行う
+		service.removeBbs(request.getParameter("bbsListId"));
 
-		return "redirect:/bbshome";
+		//bbshome画面にリダイレクト
+		return "redirect:/bbs/home";
 	}
 
 }

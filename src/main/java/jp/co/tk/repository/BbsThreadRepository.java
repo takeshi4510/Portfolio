@@ -13,12 +13,12 @@ import jp.co.tk.entity.BbsThreadEntity;
 
 
 @Repository
-public interface BbsThreadRepository extends JpaRepository<BbsThreadEntity, Long>{
+public interface BbsThreadRepository extends JpaRepository<BbsThreadEntity, Integer>{
 
 
-	@Query(value="select * from bbsthread where bbs_id = ?1"
+	@Query(value="select * from bbsthread where bbs_id = ?1 order by id desc"
 			, nativeQuery = true)
-	List<BbsThreadEntity> threadFingId(int id);
+	List<BbsThreadEntity> findByBbsId(int id);
 
 	@Transactional
 	@Modifying

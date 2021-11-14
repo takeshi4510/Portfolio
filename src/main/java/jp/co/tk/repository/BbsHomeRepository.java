@@ -18,29 +18,29 @@ public interface BbsHomeRepository extends JpaRepository<BbsHomeEntity, Long>{
 
 
 
-	@Query(value = "select * from bbs"
+	@Query(value = "select * from BBS order by ID desc"
 			, nativeQuery = true)
-	public List<BbsHomeEntity> findBySelectAll();
+	public List<BbsHomeEntity> findAllDesc();
 
 
-	@Query(value = "select * from bbs where id = ?1"
+	@Query(value = "select * from BBS where ID = ?1"
 			, nativeQuery = true)
-	public List<BbsHomeEntity> findbyId(Integer id);
+	public List<BbsHomeEntity> findByBbsId(Integer id);
 
 
-	@Query(value = "select * from user where name = ?1"
+	@Query(value = "select * from USER where NAME = ?1"
 			, nativeQuery = true)
 	public int IdSelect(String name);
 
 	@Transactional
 	@Modifying
-	@Query(value = "delete from bbs where id = ?1"
+	@Query(value = "delete from BBS where ID = ?1"
 	, nativeQuery = true)
 	public int remove(String user_id);
 
 
 	//bbs編集IDを取得
-	@Query(value = "select * from bbs where id = ?1"
+	@Query(value = "select * from BBS where ID = ?1"
 			, nativeQuery = true)
 	public Optional<BbsHomeEntity> edit(String bbs_id);
 

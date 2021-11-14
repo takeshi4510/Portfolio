@@ -1,9 +1,7 @@
 package jp.co.tk.service;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,61 +12,80 @@ import org.springframework.stereotype.Service;
 import jp.co.tk.entity.BbsHomeEntity;
 import jp.co.tk.repository.BbsHomeRepository;
 
+/**
+ * bbs画面　service処理
+ * @author Takeshi Nakasone
+ *
+ */
 @Service
 public class BbsHomeService {
 	@Autowired
-	BbsHomeRepository BbsHomeRepository;
+	BbsHomeRepository service;
 
 	/**
 	 * BbsHome画面の入力チェック
 	 * @param request
 	 * @return
 	 */
-	public Map<String, String> check(HttpServletRequest request) {
-		Map<String, String> map = new HashMap<>();
-		//チェック
-		map.put("check", "0");
-		//エラーメッセージを格納
-		map.put("msg", "");
+	public String validateBbsInput(
+			HttpServletRequest request) {
+
+		//空文字を変数msgに格納
+		String msg = "";
 
 		//タイトルの入力チェック
 		if("".equals(request.getParameter("title"))){
-			map.put("check", "1");
-			map.put("msg", "タイトルを入力してください");
-			return map;
+			msg = "タイトルを入力してください";
+			return msg;
 		}
 
 		//内容の入力チェック
 		if("".equals(request.getParameter("contents"))) {
-			map.put("check", "1");
-			map.put("msg", "内容を入力してください");
-			return map;
+			msg = "内容を入力してください";
+			return msg;
 		}
 
-		return map;
+		return msg;
 
 	}
 
-	/*
+	/**
 	 * BbsHomeの登録処理
+	 * @param request
+	 * @param id
+	 * @return
 	 */
-	public BbsHomeEntity insert(HttpServletRequest request, int id) {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	public BbsHomeEntity insertBbs(
+			HttpServletRequest request,
+			int id) {
+
+		LocalDateTime nowDateTime = LocalDateTime.now();
+
 		BbsHomeEntity entity = new BbsHomeEntity();
 		entity.setUser_id(id);
 		entity.setTitle(request.getParameter("title"));
 		entity.setName(request.getParameter("name"));
 		entity.setContents(request.getParameter("contents"));
-		entity.setAdd_date(timestamp);
-		return BbsHomeRepository.save(entity);
+		entity.setAdd_date(nowDateTime);
+		return service.save(entity);
 	}
 
-	public List<BbsHomeEntity> select() {
-		return BbsHomeRepository.findBySelectAll();
+	/**
+	 * BbsTableのデータを全件取得処理
+	 * @return
+	 */
+	public List<BbsHomeEntity> findByBbsAll() {
+		return service.findAllDesc();
 	}
 
-	public int remove(String user_id) {
-		return BbsHomeRepository.remove(user_id);
+
+	/**
+	 * Bbs削除処理
+	 * @param user_id
+	 * @return
+	 */
+	public int removeBbs(String userId) {
+		return service.remove(userId);
 	}
 
 	/**
@@ -76,17 +93,18 @@ public class BbsHomeService {
 	 * @param request
 	 * @return
 	 */
-	public BbsHomeEntity edit(HttpServletRequest request) {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	public BbsHomeEntity updateBbs(HttpServletRequest request) {
 
-		Optional<BbsHomeEntity> optinal = BbsHomeRepository.edit(request.getParameter("bbs_id"));
+		LocalDateTime nowDateTime = LocalDateTime.now();
+
+		Optional<BbsHomeEntity> optinal = service.edit(request.getParameter("bbsId"));
 		BbsHomeEntity entity = optinal.get();
 
 		entity.setTitle(request.getParameter("title"));
 		entity.setContents(request.getParameter("contents"));
-		entity.setUp_date(timestamp);
+		entity.setUp_date(nowDateTime);
 
-		return BbsHomeRepository.save(entity);
+		return service.save(entity);
 	}
 
 }

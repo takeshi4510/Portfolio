@@ -1,9 +1,7 @@
 package jp.co.tk.service;
 
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,81 +14,126 @@ import jp.co.tk.entity.BbsThreadEntity;
 import jp.co.tk.repository.BbsHomeRepository;
 import jp.co.tk.repository.BbsThreadRepository;
 
+/**
+ * BbsThreadに関するservice処理
+ * @author Takeshi Nakasone
+ *
+ */
 @Service
 public class BbsThreadService {
 	@Autowired
-	BbsHomeRepository BbsHomeRepository;
+	BbsHomeRepository bbsHomeRepository;
 	@Autowired
-	BbsThreadRepository BbsThreadRepository;
+	BbsThreadRepository repository;
 	@Autowired
-	LoginService LoginService;
+	LoginService service;
 
 	/*
 	 * 入力チェック
 	 */
-	public Map<String, String> check(HttpServletRequest request) {
-		Map<String, String> authMap = new HashMap<>();
-		//チェック
-		authMap.put("check", "0");
-		//エラーメッセージを格納
-		authMap.put("msg", "");
+	public String validateThreadInputs(
+			HttpServletRequest request) {
 
-		//ネームの入力チェック
-		if("".equals(request.getParameter("name"))) {
-			authMap.put("check", "1");
-			authMap.put("msg", "ネームを入力してください");
-			return authMap;
-		}
+		//空文字を変数msgにセット
+		String msg = "";
 
 		//内容の入力チェック
 		if("".equals(request.getParameter("contents"))) {
-			authMap.put("check", "1");
-			authMap.put("msg", "内容を入力してください");
-			return authMap;
+			//エラーメッセージを変数msgに格納
+			msg = "内容を入力してください";
+
+			//メッセージを返す
+			return msg;
 		}
 
-		return authMap;
-	}
-
-
-	public List<BbsHomeEntity> select(Integer id) {
-		return BbsHomeRepository.findbyId(id);
-	}
-
-	//BbsThread画面の登録処理
-	public BbsThreadEntity insert(HttpServletRequest request, int bbs_id, int user_id) {
-		BbsThreadEntity entity = new BbsThreadEntity();
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		entity.setBbs_id(bbs_id);
-		entity.setUser_id(user_id);
-		entity.setName(LoginService.id(request.getSession().getAttribute("session_id")));
-		entity.setContents(request.getParameter("contents"));
-		entity.setAdd_date(timestamp);
-		return BbsThreadRepository.save(entity);
-	}
-
-	public List<BbsThreadEntity> threadSelect(int id) {
-		return BbsThreadRepository.threadFingId(id);
-	}
-
-	public int remove(String thread_id) {
-		return BbsThreadRepository.delete(thread_id);
+		//メッセージを返す
+		return msg;
 	}
 
 
 	/**
-	 * bbsthreadの編集処理
+	 * bbsTableからIdを元に値を取得処理
+	 * @param id
+	 * @return
+	 */
+	public List<BbsHomeEntity> findByBbs(Integer id) {
+
+
+		//取得した値を返す
+		return bbsHomeRepository.findByBbsId(id);
+	}
+
+
+	/**
+	 * BbsThread画面の登録処理
+	 * @param request
+	 * @param bbsId
+	 * @param userId
+	 * @return
+	 */
+	public BbsThreadEntity insert(
+			HttpServletRequest request,
+			int bbsId,
+			int userId) {
+
+		//BbsThreadEntityクラスをnewする
+		BbsThreadEntity entity = new BbsThreadEntity();
+
+		LocalDateTime nowDateTime = LocalDateTime.now();
+
+		//取得した値をentityにセット
+		entity.setBbs_id(bbsId);
+		entity.setUser_id(userId);
+		entity.setName(service.getUserName(request.getSession().getAttribute("sessionId")));
+		entity.setContents(request.getParameter("contents"));
+		entity.setAdd_date(nowDateTime);
+
+		//取得したデータを登録
+		return repository.save(entity);
+	}
+
+	/**
+	 * スレッドTable取得処理
+	 * @param id
+	 * @return
+	 */
+	public List<BbsThreadEntity> threadSelect(
+			int id) {
+
+		//IdをもとにスレッドTableから値を取得し返す
+		return repository.findByBbsId(id);
+	}
+
+	/**
+	 * スレッド画面のデータ削除処理
+	 * @param thread_id
+	 * @return
+	 */
+	public void removeThread(
+			String thread_id) {
+
+		Optional<BbsThreadEntity> entity = repository.findById(Integer.parseInt(thread_id));
+
+		//スレッド削除
+		repository.delete(entity.get());
+	}
+
+
+	/**
+	 * スレッド画面の編集処理
 	 * @param request
 	 */
-	public BbsThreadEntity edit(HttpServletRequest request) {
-//		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	public BbsThreadEntity updateThreadEdit(
+			HttpServletRequest request) {
 
-		Optional<BbsThreadEntity> optinal = BbsThreadRepository.edit(request.getParameter("thread_id"));
+		Optional<BbsThreadEntity> optinal = repository.edit(request.getParameter("threadId"));
+
 		BbsThreadEntity entity = optinal.get();
 
 		entity.setContents(request.getParameter("contents"));
 
-		return BbsThreadRepository.save(entity);
+		//編集した値を更新
+		return repository.save(entity);
 
 	}
 

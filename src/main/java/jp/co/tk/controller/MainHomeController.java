@@ -10,30 +10,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jp.co.tk.service.MailService;
 
+/**
+ * ポートフォリオ画面
+ * @author Takeshi Nakasone
+ *
+ */
 @Controller
 public class MainHomeController {
 	@Autowired
 	MailService MailService;
 
 	/**
-	 * ポートフォリオ画面
+	 * ポートフォリオ画面初期表
 	 * @return
 	 */
-	@GetMapping("/home")
-	public String index() {
+	@GetMapping("/portfolio")
+	public String doGetHome() {
+
+		//ポートフォリオ画面に遷移
 		return "mainhome";
 	}
 
 	/**
-	 * お問い合わせフォーム
+	 * お問い合わせフォーム処理
 	 * @param request　
 	 * @param response
 	 * @return
 	 */
-	@PostMapping("/inquiry")
-	public String mail(HttpServletRequest request, HttpServletResponse response) {
+	@PostMapping("/portfolio/inquiry")
+	public String doPostMail(
+			HttpServletRequest request,
+			HttpServletResponse response) {
+
+		//メール処理
 		MailService.sendMail(request);
 
-		return "redirect:/home#4";
+		//ホーム画面にリダイレクト
+		return "redirect:/portfolio#4";
 	}
 }

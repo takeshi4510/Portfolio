@@ -1,6 +1,6 @@
 package jp.co.tk.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,9 @@ public class BbsThreadEntity {
 	@Column
 	private String contents;
 	@Column
-	private Timestamp add_date;
+	private LocalDateTime add_date;
 	@Column
-	private Timestamp up_date;
+	private LocalDateTime up_date;
 
 
 
@@ -63,16 +63,16 @@ public class BbsThreadEntity {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public Timestamp getAdd_date() {
+	public LocalDateTime getAdd_date() {
 		return add_date;
 	}
-	public void setAdd_date(Timestamp add_date) {
+	public void setAdd_date(LocalDateTime add_date) {
 		this.add_date = add_date;
 	}
-	public Timestamp getUp_date() {
+	public LocalDateTime getUp_date() {
 		return up_date;
 	}
-	public void setUp_date(Timestamp up_date) {
+	public void setUp_date(LocalDateTime up_date) {
 		this.up_date = up_date;
 	}
 

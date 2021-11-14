@@ -1,66 +1,77 @@
 package jp.co.tk.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.co.tk.service.LoginService;
 
+/**
+ * ログイン画面
+ * @author Takeshi Nakasone
+ *
+ */
 @Controller
 public class LoginController {
 	@Autowired
-	private LoginService LoginService;
+	private LoginService service;
 
 	/**
-	 * ログイン画面
+	 * ログイン画面初期表示
 	 * @param request
 	 * @return
 	 */
-	@GetMapping("/login")
-	public String index(HttpServletRequest request) {
+	@GetMapping("/bbs/login")
+	public String doGetLogin(
+			@ModelAttribute("msg") String msg,
+			@ModelAttribute("name") String name,
+			HttpServletRequest request) {
+
 		//セッション破棄
 		request.getSession().invalidate();
 
-		return "login";
+		//ログイン画面に遷移
+		return "/login";
 	}
 
 	/**
-	 * ログインのチェック処理
+	 * ログインチェック処理
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("/login")
-	public String login(HttpServletRequest request, Model model) {
-		//エラーメッセージ格納用マップ作成
-		Map<String, String> authMap = new HashMap<>();
+	@PostMapping("bbs/login/validate")
+	public String doPostLoginValidate(
+			HttpServletRequest request,
+			RedirectAttributes redirectAttributes,
+			Model model) {
 
 		//入力チェック&ユーザの存在チェック
-		authMap = LoginService.Auth(request);
-		//ログイン時に入力された値を保持するための変数
+		String msg = service.validateLogin(request);
 
 		//入力チェックがNGの場合ログイン画面に遷移
-		if("1".equals(authMap.get("Judg"))) {
-			//エラーメッセージをログイン画面に渡す
-			model.addAttribute("msg", authMap.get("msg"));
-			model.addAttribute("name",  request.getParameter("name"));
+		if(msg.length() > 0) {
 
-			return "login";
+			//エラーメッセージをログイン画面に渡す
+			redirectAttributes.addFlashAttribute("msg", msg);
+			redirectAttributes.addFlashAttribute("name",  request.getParameter("name"));
+
+			//ログイン画面に遷移
+			return "redirect:/bbs/login";
 		}
 
-		//入力チェックと存在チェックがOKの場合セッションをsession_idに格納
-		request.getSession().setAttribute("session_id", LoginService.selectId(request.getParameter("name"),request.getParameter("password")));
+		//入力チェックと存在チェックがOKの場合セッションを変数sessionIdに格納
+		request.getSession().setAttribute("sessionId", service.selectId(request.getParameter("name"),request.getParameter("password")));
 
 		//bbsホーム画面にリダイレクト
-		return "redirect:/bbshome";
+		return "redirect:/bbs/home";
 
 	}
 
