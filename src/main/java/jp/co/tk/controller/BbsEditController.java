@@ -27,7 +27,9 @@ public class BbsEditController {
 	 * @return
 	 */
 	@PostMapping("/bbs/edit")
-	public String doPostBbsEdit(HttpServletRequest request, Model model){
+	public String doPostBbsEdit(
+			HttpServletRequest request,
+			Model model){
 
 		//セッションスコープ
 		if(request.getSession().getAttribute("sessionId") == null || "".equals(request.getSession().getAttribute("sessionId"))) {

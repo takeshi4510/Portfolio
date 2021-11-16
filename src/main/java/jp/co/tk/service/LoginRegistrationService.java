@@ -33,11 +33,6 @@ public class LoginRegistrationService {
 		//空文字を変数msgに格納
 		String msg = "";
 
-		//入力チェック用正規表現
-		String str1 = "[!-~]{6,15}";
-//		String str2 = ".*[A-Z]+.";
-//		String str3 = ".*[0-9]+.";
-
 		//Nameの空文字チェックとnullチェック
 		if("".equals(name) || name.isEmpty()) {
 			msg = "Nameが未入力です！";
@@ -57,18 +52,17 @@ public class LoginRegistrationService {
 		}
 
 		//Passwordの文字数チェック
-		if(password.length() <= 3) {
+		if(password.length() <= 5) {
 			msg = "Passwordは6文字以上で作成してください！";
 			return msg;
 		}
 
 		//Passwordの正規表現チェック
-		boolean bResult = (password.matches(str1));
+		boolean bResult = (password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*"));
 		if (bResult == false) {
 			msg = "半角英数字を組み合わせて作成してください";
 			return msg;
 		}
-
 
 		//DBに件数が一件でもある場合NG
 		if(1 <= repository.findbyUser(name).size()) {
